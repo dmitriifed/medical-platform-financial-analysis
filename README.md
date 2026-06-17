@@ -27,7 +27,7 @@ Full write-up: [`reports/executive_summary.md`](reports/executive_summary.md) ·
 
 **[→ Open interactive dashboard](https://dmitriifed.github.io/medical-platform-financial-analysis/)**
 
-19 Plotly charts across 8 topics. No installation required — opens in any browser.
+26 Plotly charts across 8 topics. No installation required — opens in any browser.
 
 ---
 
