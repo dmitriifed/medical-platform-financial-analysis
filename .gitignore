@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+venv/
+
+# Data — never commit originals or large files
+data/raw/original_CRM/
+data/raw/fx_rate/
+*.xlsx
+*.csv
+
+# Allow scrambled processed data explicitly (committed to showcase)
+!data/processed/crm_stage_finished.xlsx
+!data/processed/crm_selected_translated_column.xlsx
+!data/raw/hierarchy/doctor_specialty_group.xlsx
+
+# Notebook outputs — clear before committing
+# Run: jupyter nbconvert --clear-output notebooks/quick_viz_4.ipynb
+.ipynb_checkpoints/
+
+# Dashboard output (served via docs/ for GitHub Pages, not visualisations/)
+visualisations/
+outputs/
+
+# OS
+.DS_Store
+Thumbs.db
