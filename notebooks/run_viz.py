@@ -167,6 +167,53 @@ df_all  = ns.get('df_all')
 n_done  = f'{len(df_done):,}' if df_done is not None else '—'
 n_all   = f'{len(df_all):,}'  if df_all  is not None else '—'
 
+# ---- Key findings (each link resolves to its supporting chart by title match) ----
+def find_anchor(*keywords):
+    for i, (title, _) in enumerate(HTML_DIVS):
+        t = title.lower()
+        if all(k.lower() in t for k in keywords):
+            return f'#chart{i+1}'
+    return None
+
+FINDINGS = [
+    ("Revenue is growing, but gross margin is shrinking.",
+     "The growth is coming from volume, not efficiency.",
+     ("Gross Margin",)),
+    ("Video consultations earn more than chat.",
+     "Higher profit per consultation makes the case for shifting the mix toward video.",
+     ("Gross Profit", "Service Type")),
+    ("Cancellations are rising.",
+     "That is lost revenue, and most of it is recoverable.",
+     ("Cancellation Trend",)),
+    ("A small group of doctors brings in most of the revenue.",
+     "A concentration risk; the active provider base needs widening.",
+     ("Pareto", "Doctor")),
+    ("Most patients do not return after the first visit.",
+     "Lifetime value is capped, so retention is the largest opportunity.",
+     ("Cohort",)),
+    ("Four specialties produce most of the gross profit.",
+     "Endocrinology, general medicine, surgery, and cardiology are where extra supply pays off.",
+     ("Treemap",)),
+]
+
+finding_items = ''
+for headline, detail, keywords in FINDINGS:
+    anchor = find_anchor(*keywords)
+    link = (f' <a href="{anchor}" style="color:#27AE60;text-decoration:none;font-weight:600;white-space:nowrap">View chart</a>'
+            if anchor else '')
+    finding_items += (
+        '<li style="margin-bottom:10px;line-height:1.5">'
+        f'<span style="font-weight:600;color:#2c3e50">{headline}</span> '
+        f'<span style="color:#5f6b7a">{detail}</span>{link}</li>'
+    )
+
+findings_html = (
+    '<div style="background:#fff;border-radius:8px;padding:18px 22px;'
+    'margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)">'
+    '<h2 style="margin:0 0 12px;font-size:1.05em;color:#2c3e50">Key findings</h2>'
+    f'<ol style="margin:0;padding-left:22px">{finding_items}</ol></div>'
+)
+
 html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -210,6 +257,7 @@ html = f"""<!DOCTYPE html>
      &nbsp;|&nbsp; All records: {n_all}
      &nbsp;|&nbsp; Charts: {len(HTML_DIVS)}</p>
 </header>
+{findings_html}
 <div class="breakdown"><h2>Content by topic</h2>{breakdown}</div>
 <nav>{nav}</nav>
 {cards}
